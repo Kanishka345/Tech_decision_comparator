@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tech Decision Comparator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Tech Decision Comparator</h1>
+    <p>Compare technology choices based on real-world constraints</p>
+</header>
+
+<main>
+    <section class="input-section">
+        <div class="input-group">
+            <label>Tech Stack A</label>
+            <select id="optionA">
+                <option>MEAN Stack (MongoDB, Express, Angular, Node.js)</option>
+                <option>MERN Stack (MongoDB, Express, React, Node.js)</option>
+                <option>LAMP Stack (Linux, Apache, MySQL, PHP)</option>
+                <option>Django + PostgreSQL + Redis</option>
+                <option>Next.js + Vercel + Supabase</option>
+                <option>Laravel + MySQL + Redis</option>
+                <option>Spring Boot + PostgreSQL + Docker</option>
+                <option>Ruby on Rails + PostgreSQL + Sidekiq</option>
+                <option>Serverless (AWS Lambda + API Gateway + DynamoDB)</option>
+                <option>JAMstack (Gatsby + Netlify + Contentful)</option>
+                <option>AWS EC2</option>
+                <option>AWS Lambda</option>
+                <option>Firebase</option>
+                <option>Supabase</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Tech Stack B</label>
+            <select id="optionB">
+                <option>MERN Stack (MongoDB, Express, React, Node.js)</option>
+                <option>MEAN Stack (MongoDB, Express, Angular, Node.js)</option>
+                <option>Django + PostgreSQL + Redis</option>
+                <option>LAMP Stack (Linux, Apache, MySQL, PHP)</option>
+                <option>Laravel + MySQL + Redis</option>
+                <option>Next.js + Vercel + Supabase</option>
+                <option>Spring Boot + PostgreSQL + Docker</option>
+                <option>Serverless (AWS Lambda + API Gateway + DynamoDB)</option>
+                <option>Ruby on Rails + PostgreSQL + Sidekiq</option>
+                <option>JAMstack (Gatsby + Netlify + Contentful)</option>
+                <option>AWS Lambda</option>
+                <option>Firebase</option>
+                <option>Supabase</option>
+                <option>AWS EC2</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Primary Requirement</label>
+            <select id="priority">
+                <option>Cost Optimization</option>
+                <option>High Scalability</option>
+                <option>Rapid Development</option>
+                <option>High Performance</option>
+                <option>Team Expertise</option>
+                <option>Enterprise Features</option>
+                <option>Open Source Preference</option>
+            </select>
+        </div>
+
+        <div class="input-group full-width">
+            <label>Project Context (Optional)</label>
+            <select id="projectContext">
+                <option value="">Select project type...</option>
+                <option>Startup MVP</option>
+                <option>Enterprise Application</option>
+                <option>High-Traffic Consumer App</option>
+                <option>Internal Tool</option>
+                <option>API/Microservices</option>
+                <option>Real-time Application</option>
+                <option>Data-Heavy Application</option>
+            </select>
+        </div>
+
+        <button onclick="compare()">Run Comparison</button>
+    </section>
+
+    <section id="result" class="result-section"></section>
+</main>
+
+<footer>
+    Built for AI for Bharat Hackathon | Powered by Kiro
+</footer>
+
+<script>
+console.log("Tech Decision Comparator loading...");
+
+const data = {
+    "MEAN Stack (MongoDB, Express, Angular, Node.js)": {
+        pros: ["Full JavaScript ecosystem", "Strong TypeScript support", "Enterprise-grade Angular", "Scalable architecture"],
+        cons: ["Steep learning curve", "Complex setup", "Heavy framework overhead", "Requires Angular expertise"],
+        bestFor: "Large enterprise applications with complex UI requirements",
+        requirements: {
+            "Cost Optimization": "Medium - requires skilled developers",
+            "High Scalability": "High - designed for enterprise scale",
+            "Rapid Development": "Medium - powerful but complex",
+            "High Performance": "High - optimized for large applications",
+            "Team Expertise": "High - requires JavaScript/TypeScript skills",
+            "Enterprise Features": "Excellent - built for enterprise",
+            "Open Source Preference": "Good - mostly open source"
+        }
+    },
+    "MERN Stack (MongoDB, Express, React, Node.js)": {
+        pros: ["Popular and well-supported", "Flexible React ecosystem", "Fast development", "Large community"],
+        cons: ["Decision fatigue with React ecosystem", "NoSQL limitations", "Requires state management decisions", "Security considerations"],
+        bestFor: "Modern web applications with dynamic UIs and rapid iteration needs",
+        requirements: {
+            "Cost Optimization": "Good - many free resources",
+            "High Scalability": "Good - scales well with proper architecture",
+            "Rapid Development": "Excellent - fast prototyping",
+            "High Performance": "Good - React performance optimizations",
+            "Team Expertise": "Good - widely known technologies",
+            "Enterprise Features": "Medium - requires additional tooling",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "LAMP Stack (Linux, Apache, MySQL, PHP)": {
+        pros: ["Mature and stable", "Low cost hosting", "Extensive documentation", "Easy deployment"],
+        cons: ["Older technology stack", "PHP performance limitations", "Less modern development practices", "Limited real-time capabilities"],
+        bestFor: "Traditional web applications, content management systems, and budget-conscious projects",
+        requirements: {
+            "Cost Optimization": "Excellent - very affordable",
+            "High Scalability": "Medium - requires optimization",
+            "Rapid Development": "Good - familiar to many developers",
+            "High Performance": "Medium - adequate for most use cases",
+            "Team Expertise": "Excellent - widely known",
+            "Enterprise Features": "Medium - basic enterprise support",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "Django + PostgreSQL + Redis": {
+        pros: ["Rapid development framework", "Built-in admin interface", "Strong security features", "Excellent ORM"],
+        cons: ["Python performance limitations", "Monolithic architecture", "Learning curve for Django patterns", "Less frontend flexibility"],
+        bestFor: "Data-driven applications, admin interfaces, and content management systems",
+        requirements: {
+            "Cost Optimization": "Good - efficient development",
+            "High Scalability": "Good - with proper caching and optimization",
+            "Rapid Development": "Excellent - batteries included framework",
+            "High Performance": "Medium - Python performance considerations",
+            "Team Expertise": "Good - Python is popular",
+            "Enterprise Features": "Good - mature framework with enterprise features",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "Next.js + Vercel + Supabase": {
+        pros: ["Modern React framework", "Excellent developer experience", "Built-in optimizations", "Easy deployment"],
+        cons: ["Vendor lock-in with Vercel", "Newer ecosystem", "Can be expensive at scale", "Limited backend flexibility"],
+        bestFor: "Modern web applications, JAMstack sites, and teams prioritizing developer experience",
+        requirements: {
+            "Cost Optimization": "Medium - can get expensive",
+            "High Scalability": "Excellent - edge network and auto-scaling",
+            "Rapid Development": "Excellent - streamlined workflow",
+            "High Performance": "Excellent - built-in optimizations",
+            "Team Expertise": "Good - React knowledge required",
+            "Enterprise Features": "Good - growing enterprise support",
+            "Open Source Preference": "Medium - mix of open source and proprietary"
+        }
+    },
+    "Laravel + MySQL + Redis": {
+        pros: ["Elegant PHP framework", "Rich ecosystem", "Built-in features", "Good documentation"],
+        cons: ["PHP performance limitations", "Requires PHP expertise", "Monolithic by default", "Less modern than some alternatives"],
+        bestFor: "Web applications requiring rapid development with PHP expertise",
+        requirements: {
+            "Cost Optimization": "Good - affordable hosting options",
+            "High Scalability": "Medium - requires optimization",
+            "Rapid Development": "Excellent - artisan commands and built-ins",
+            "High Performance": "Medium - PHP performance considerations",
+            "Team Expertise": "Good - if team knows PHP",
+            "Enterprise Features": "Good - mature framework",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "Spring Boot + PostgreSQL + Docker": {
+        pros: ["Enterprise-grade Java framework", "Excellent tooling", "Strong typing", "Mature ecosystem"],
+        cons: ["Java verbosity", "Longer development cycles", "Resource intensive", "Complex for simple applications"],
+        bestFor: "Enterprise applications, microservices, and teams with Java expertise",
+        requirements: {
+            "Cost Optimization": "Medium - requires more resources",
+            "High Scalability": "Excellent - designed for enterprise scale",
+            "Rapid Development": "Medium - more setup required",
+            "High Performance": "Excellent - JVM performance",
+            "Team Expertise": "Good - if team knows Java",
+            "Enterprise Features": "Excellent - built for enterprise",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "Ruby on Rails + PostgreSQL + Sidekiq": {
+        pros: ["Convention over configuration", "Rapid prototyping", "Mature framework", "Good for startups"],
+        cons: ["Ruby performance limitations", "Smaller community than before", "Monolithic architecture", "Scaling challenges"],
+        bestFor: "Startups, MVPs, and teams prioritizing development speed",
+        requirements: {
+            "Cost Optimization": "Good - efficient development",
+            "High Scalability": "Medium - requires careful architecture",
+            "Rapid Development": "Excellent - designed for speed",
+            "High Performance": "Medium - Ruby performance considerations",
+            "Team Expertise": "Medium - smaller Ruby community",
+            "Enterprise Features": "Good - mature with enterprise gems",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    },
+    "Serverless (AWS Lambda + API Gateway + DynamoDB)": {
+        pros: ["Pay-per-use pricing", "Auto-scaling", "No server management", "High availability"],
+        cons: ["Vendor lock-in", "Cold start latency", "Complex debugging", "Limited execution time"],
+        bestFor: "Event-driven applications, APIs with variable traffic, and cost-conscious projects",
+        requirements: {
+            "Cost Optimization": "Excellent - pay only for usage",
+            "High Scalability": "Excellent - automatic scaling",
+            "Rapid Development": "Good - focus on business logic",
+            "High Performance": "Good - with proper optimization",
+            "Team Expertise": "Medium - requires serverless knowledge",
+            "Enterprise Features": "Good - AWS enterprise support",
+            "Open Source Preference": "Poor - proprietary AWS services"
+        }
+    },
+    "JAMstack (Gatsby + Netlify + Contentful)": {
+        pros: ["Excellent performance", "Great developer experience", "Built-in CDN", "Security benefits"],
+        cons: ["Limited to static/pre-rendered content", "Build time increases with content", "Vendor dependencies", "Complex dynamic features"],
+        bestFor: "Content sites, marketing sites, and applications with mostly static content",
+        requirements: {
+            "Cost Optimization": "Excellent - efficient hosting",
+            "High Scalability": "Excellent - CDN-based delivery",
+            "Rapid Development": "Good - streamlined for static sites",
+            "High Performance": "Excellent - pre-built static files",
+            "Team Expertise": "Good - React/JavaScript knowledge",
+            "Enterprise Features": "Medium - growing enterprise support",
+            "Open Source Preference": "Medium - mix of open source and services"
+        }
+    },
+    "AWS EC2": {
+        pros: ["Full control over infrastructure", "Consistent high performance", "Wide range of instance types", "Mature ecosystem"],
+        cons: ["Higher operational overhead", "Manual scaling setup", "More expensive for small workloads", "Requires infrastructure expertise"],
+        bestFor: "Applications needing full control, consistent workloads, or specific OS requirements",
+        requirements: {
+            "Cost Optimization": "Medium - can be expensive",
+            "High Scalability": "Good - with manual configuration",
+            "Rapid Development": "Poor - requires infrastructure setup",
+            "High Performance": "Excellent - dedicated resources",
+            "Team Expertise": "Poor - requires DevOps skills",
+            "Enterprise Features": "Excellent - full enterprise support",
+            "Open Source Preference": "Medium - can run open source software"
+        }
+    },
+    "AWS Lambda": {
+        pros: ["Pay only for execution time", "Auto-scaling built-in", "No server management", "Event-driven architecture"],
+        cons: ["Cold start latency", "15-minute execution limit", "Vendor lock-in", "Complex debugging"],
+        bestFor: "Event-driven apps, microservices, or irregular traffic patterns",
+        requirements: {
+            "Cost Optimization": "Excellent - pay per use",
+            "High Scalability": "Excellent - automatic scaling",
+            "Rapid Development": "Good - focus on code",
+            "High Performance": "Good - with optimization",
+            "Team Expertise": "Medium - serverless knowledge needed",
+            "Enterprise Features": "Good - AWS enterprise support",
+            "Open Source Preference": "Poor - proprietary service"
+        }
+    },
+    "Firebase": {
+        pros: ["Real-time database", "Rapid prototyping", "Built-in authentication", "Generous free tier"],
+        cons: ["NoSQL limitations", "Vendor lock-in", "Limited query capabilities", "Pricing can scale quickly"],
+        bestFor: "Real-time apps, rapid prototyping, or mobile-first applications",
+        requirements: {
+            "Cost Optimization": "Good - generous free tier",
+            "High Scalability": "Good - Google infrastructure",
+            "Rapid Development": "Excellent - batteries included",
+            "High Performance": "Good - real-time capabilities",
+            "Team Expertise": "Excellent - easy to learn",
+            "Enterprise Features": "Medium - growing enterprise features",
+            "Open Source Preference": "Poor - proprietary Google service"
+        }
+    },
+    "Supabase": {
+        pros: ["Open source", "PostgreSQL-based", "SQL queries", "Self-hosting option"],
+        cons: ["Smaller ecosystem", "Less mature than Firebase", "Limited real-time features", "Fewer integrations"],
+        bestFor: "Teams preferring SQL, open source solutions, or Firebase alternatives",
+        requirements: {
+            "Cost Optimization": "Good - competitive pricing",
+            "High Scalability": "Good - PostgreSQL scaling",
+            "Rapid Development": "Good - Firebase-like experience",
+            "High Performance": "Good - PostgreSQL performance",
+            "Team Expertise": "Good - SQL knowledge helpful",
+            "Enterprise Features": "Medium - growing features",
+            "Open Source Preference": "Excellent - fully open source"
+        }
+    }
+};
+
+function compare() {
+    console.log("Compare function called");
+    
+    const a = document.getElementById("optionA").value;
+    const b = document.getElementById("optionB").value;
+    const priority = document.getElementById("priority").value;
+    
+    console.log("Selected options:", a, b, priority);
+    
+    if (!data[a] || !data[b]) {
+        document.getElementById("result").innerHTML = "<p style='color: red;'>Error: Invalid selection</p>";
+        return;
+    }
+
+    const html = `
+        <h2>Tech Stack Comparison for Your Requirements</h2>
+        <div class="comparison-container">
+            <div class="option-card">
+                <h3>${a}</h3>
+                <div class="requirement-match">
+                    <h4>📋 Requirement Match: ${priority}</h4>
+                    <div class="requirement-score ${getScoreClass(data[a].requirements[priority])}">
+                        ${data[a].requirements[priority]}
+                    </div>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Pros</h4>
+                        <ul>
+                            ${data[a].pros.map(pro => `<li>${pro}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>❌ Cons</h4>
+                        <ul>
+                            ${data[a].cons.map(con => `<li>${con}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="best-for">
+                    <strong>Best for:</strong> ${data[a].bestFor}
+                </div>
+            </div>
+
+            <div class="option-card">
+                <h3>${b}</h3>
+                <div class="requirement-match">
+                    <h4>📋 Requirement Match: ${priority}</h4>
+                    <div class="requirement-score ${getScoreClass(data[b].requirements[priority])}">
+                        ${data[b].requirements[priority]}
+                    </div>
+                </div>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4>✅ Pros</h4>
+                        <ul>
+                            ${data[b].pros.map(pro => `<li>${pro}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4>❌ Cons</h4>
+                        <ul>
+                            ${data[b].cons.map(con => `<li>${con}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="best-for">
+                    <strong>Best for:</strong> ${data[b].bestFor}
+                </div>
+            </div>
+        </div>
+
+        ${getProjectContextAdvice()}
+
+        <div class="recommendation">
+            <h3>💡 Recommendation</h3>
+            <p>For <strong>${priority}</strong>: Choose <strong>${recommendBasedOnRequirement(a, b, priority)}</strong></p>
+            <p class="reasoning">${getRequirementReasoning(a, b, priority)}</p>
+        </div>
+    `;
+
+    document.getElementById("result").innerHTML = html;
+}
+
+function getScoreClass(score) {
+    if (score && score.includes("Excellent")) return "score-excellent";
+    if (score && score.includes("Good")) return "score-good";
+    if (score && score.includes("Medium")) return "score-medium";
+    if (score && score.includes("Poor")) return "score-poor";
+    return "score-medium";
+}
+
+function recommendBasedOnRequirement(a, b, priority) {
+    const scoreA = data[a].requirements[priority];
+    const scoreB = data[b].requirements[priority];
+    
+    const scoreValue = (score) => {
+        if (score && score.includes("Excellent")) return 4;
+        if (score && score.includes("Good")) return 3;
+        if (score && score.includes("Medium")) return 2;
+        if (score && score.includes("Poor")) return 1;
+        return 2;
+    };
+    
+    return scoreValue(scoreA) >= scoreValue(scoreB) ? a : b;
+}
+
+function getRequirementReasoning(a, b, priority) {
+    const winner = recommendBasedOnRequirement(a, b, priority);
+    const winnerScore = data[winner].requirements[priority];
+    return `${winner} scores "${winnerScore}" for ${priority}, making it the better choice for this requirement.`;
+}
+
+function getProjectContextAdvice() {
+    const contextElement = document.getElementById("projectContext");
+    if (!contextElement) return "";
+    
+    const context = contextElement.value;
+    if (!context) return "";
+    
+    const contextAdvice = {
+        "Startup MVP": "For MVPs, prioritize rapid development and cost optimization. Consider MERN/Next.js for speed.",
+        "Enterprise Application": "Enterprise apps need scalability and security. Consider Spring Boot, .NET, or Django.",
+        "High-Traffic Consumer App": "Focus on performance and scalability. Consider serverless or microservices architecture.",
+        "Internal Tool": "Prioritize development speed and team expertise. LAMP or Django work well.",
+        "API/Microservices": "Consider serverless, Spring Boot, or Node.js with proper API design.",
+        "Real-time Application": "Firebase, Socket.io with Node.js, or Django Channels are good choices.",
+        "Data-Heavy Application": "PostgreSQL-based stacks or specialized data processing frameworks work best."
+    };
+    
+    return `<div class="context-advice">
+        <h4>🎯 Project Context: ${context}</h4>
+        <p>${contextAdvice[context] || "Consider your specific project requirements."}</p>
+    </div>`;
+}
+
+console.log("Tech Decision Comparator loaded successfully!");
+</script>
+</body>
+</html>
